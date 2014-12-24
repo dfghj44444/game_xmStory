@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>IDESourceControlProjectFavoriteDictionaryKey</key>
+	<false/>
+	<key>IDESourceControlProjectIdentifier</key>
+	<string>1FC2627A-04BA-422D-8462-8E1F964035E8</string>
+	<key>IDESourceControlProjectName</key>
+	<string>helloGame</string>
+	<key>IDESourceControlProjectOriginsDictionary</key>
+	<dict>
+		<key>C7DCFD67-3BF4-4FFC-9CC2-7639A796847F</key>
+		<string>svn://192.168.1.119/cocos_game</string>
+	</dict>
+	<key>IDESourceControlProjectPath</key>
+	<string>ProjectT_I/proj.ios_mac/helloGame.xcodeproj/project.xcworkspace</string>
+	<key>IDESourceControlProjectRelativeInstallPathDictionary</key>
+	<dict>
+		<key>C7DCFD67-3BF4-4FFC-9CC2-7639A796847F</key>
+		<string>../../../..</string>
+	</dict>
+	<key>IDESourceControlProjectRepositoryRootDictionary</key>
+	<dict>
+		<key>C7DCFD67-3BF4-4FFC-9CC2-7639A796847F</key>
+		<string>svn://192.168.1.119/cocos_game</string>
+	</dict>
+	<key>IDESourceControlProjectURL</key>
+	<string>svn://192.168.1.119/cocos_game/ProjectT/proj.ios_mac/helloGame.xcodeproj</string>
+	<key>IDESourceControlProjectVersion</key>
+	<integer>110</integer>
+	<key>IDESourceControlProjectWCCIdentifier</key>
+	<string>C7DCFD67-3BF4-4FFC-9CC2-7639A796847F</string>
+	<key>IDESourceControlProjectWCConfigurations</key>
+	<array>
+		<dict>
+			<key>IDESourceControlRepositoryExtensionIdentifierKey</key>
+			<string>public.vcs.subversion</string>
+			<key>IDESourceControlWCCIdentifierKey</key>
+			<string>C7DCFD67-3BF4-4FFC-9CC2-7639A796847F</string>
+			<key>IDESourceControlWCCName</key>
+			<string>cocos_game</string>
+		</dict>
+	</array>
+</dict>
+</plist>
