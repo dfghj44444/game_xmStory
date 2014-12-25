@@ -3,9 +3,37 @@
 #include "AppMacros.h"
 #include "SimpleAudioEngine.h"
 #include <math.h>
-
+#include "sqllite/sqlite3.h"
 USING_NS_CC;
-   
+using namespace std;
+enum speakers{
+	PANGBA,
+	ME,
+	WANG
+};
+struct sSteps{
+	int id;
+	int IdSpeaker;
+	int IdSoundEffective;
+	int IdBgMusic;
+	bool hasEvent;
+	Rect _EventArea;
+	string strDialog;
+	sSteps(){
+	   id=0;
+	   IdSpeaker=0;
+	   hasEvent = false;
+	   strDialog = "";
+	} ;
+	sSteps(string msg){
+		id=0;
+		IdSpeaker=0;
+		hasEvent = false;
+		strDialog = msg;
+	}
+}; 
+
+static Vector<sSteps> g_steps;
 CCScene* GameScene::scene()
 {
 	// 'scene' is an autorelease object
@@ -77,8 +105,7 @@ bool GameScene::init()
 	bgOrigin = ccp(origin.x + visibleSize.width/2 - bgSize.width/2 * m_scale , origin.y + visibleSize.height/2 - bgSize.height/2 * m_scale);  
 
 	CCLOG( "bgOrigin:%1f,%1f" , bgOrigin.x,bgOrigin.y  );
-	//初始化数据  
-
+	//初始化数据
 	distance = 0.0f;  
 	_touchesDic = CCDictionary::create();  
 	_touchesDic->retain();  
@@ -92,6 +119,31 @@ bool GameScene::init()
 	m_rectPhone = CCRectMake(1600,2592-1607-73,172,73);
 
 	this->setTouchEnabled( true);
+
+	//init db
+	g_steps.pushBack(sSteps(".....(点击黑色区域继续)"));
+	g_steps.pushBack(sSteps("..."));
+	g_steps.pushBack(sSteps("唉？开会又睡着了吗？"));
+	g_steps.pushBack(sSteps("呀，真没办法，一开会就困。"));
+	g_steps.pushBack(sSteps("什么？把门锁了？没见我在这睡觉吗？"));
+	g_steps.pushBack(sSteps("时间是？六点，一刻"));
+	g_steps.pushBack(sSteps("！！！"));
+	g_steps.pushBack(sSteps("完蛋了！！！还没回去给老婆烧饭！"));
+	g_steps.pushBack(sSteps("回家一定要跪搓键盘了..."));	 
+	g_steps.pushBack(sSteps("(咕咕咕。。。)"));	
+	g_steps.pushBack(sSteps("好饿，好冷，怎么办？难道我要饿死在这里了？"));
+	g_steps.pushBack(sSteps("谁要买火柴啊？一块钱一盒的火柴，一块钱你买不了吃亏"));
+	g_steps.pushBack(sSteps("还是打个电话找谁来救救我吧"));
+	g_steps.pushBack(sSteps("(正在呼叫。。。)"));
+	g_steps.pushBack(sSteps("鑫林，是你吗，我被反锁在会议室，快来帮帮我！"));
+	g_steps.pushBack(sSteps("李：唉，就知道你出不去"));
+	g_steps.pushBack(sSteps("李：你开会睡那么香，踹都踹不醒"));
+	g_steps.pushBack(sSteps("好了，别说那么多，快救我出去"));
+	g_steps.pushBack(sSteps("李：安心安心，钥匙我给你留了，在花盆里"));
+	g_steps.pushBack(sSteps("哪个花盆啊？");
+	g_steps.pushBack(sSteps("擦叻！手机这时候没电，让你丫开会玩手机");
+	g_steps.pushBack(sSteps("好吧，我自己找，反正没几个花盆");
+	g_steps.pushBack(sSteps(" ");
 	return true;  
 }  
 
@@ -119,45 +171,24 @@ void GameScene::menuTalkCallback( CCObject* pSender )
 	 switch(m_TextProgress)
 	 {
 	 case 1:
-		 pLabel->setString("...");
-		 break;
 	 case 2:
-		 pLabel->setString("唉？开会又睡着了吗？");
-		 break;
 	 case 3:
-		 pLabel->setString("呀，真没办法，一开会就困。");
-		 break;
 	 case 4:
-		 pLabel->setString("（咔。咔。）");
-		 SimpleAudioEngine::getInstance()->playEffect("door.mp3"); 
-		 break;
 	 case 5:
-		 pLabel->setString("什么？把门锁了？没见我在这睡觉吗？");
-		 break;
 	 case 6:
-		 pLabel->setString("时间是？六点，一刻");
-		 break;
 	 case 7:
-		 pLabel->setString("！！！");
-		 break;
 	 case 8:
-		 pLabel->setString("完蛋了！！！还没回去给老婆烧饭！");
-		 break;
 	 case 9:
-		 pLabel->setString("回家一定要跪搓键盘了...");	 
-		 break;
 	 case 10:
-		 pLabel->setString("(咕咕咕。。。)");	
-		 break;
 	 case 11:
-		 pLabel->setString("好饿，好冷，怎么办？难道我要饿死在这里了？");
-		 break;
 	 case 12:
-		 pLabel->setString("谁要买火柴啊？一块钱一盒的火柴，一块钱你买不了吃亏");
+		 {
+		 pLabel->setString(g_steps.at(m_TextProgress).strDialog);
 		 break;
+		 }
 	 case 13:
 		 {
-		 pLabel->setString("还是打个电话找谁来救救我吧");
+		  pLabel->setString(g_steps.at(m_TextProgress).strDialog);
 		 CCLayer* sc = InputWidget::create();
 		 static_cast<InputWidget*>(sc)->SetShowType(0);
 		 this->getParent()->addChild(sc);  
@@ -166,7 +197,7 @@ void GameScene::menuTalkCallback( CCObject* pSender )
 		 break;
 	 case 14:
 		 {
- 		 pLabel->setString("(正在呼叫。。。)");
+ 	 pLabel->setString(g_steps.at(m_TextProgress).strDialog);
 		 CCLayer* sc = InputWidget::create();
 		 static_cast<InputWidget*>(sc)->SetShowType(1);
 		 sc->setTag(249);
@@ -174,37 +205,30 @@ void GameScene::menuTalkCallback( CCObject* pSender )
 		 }
 		 break;
 	 case 15:
-		 pLabel->setString("鑫林，是你吗，我被反锁在会议室，快来帮帮我！");
-		break;
 	 case 16:
-		 pLabel->setString("李：唉，就知道你出不去");
-		 break;
 	 case 17:
-		 pLabel->setString("李：你开会睡那么香，踹都踹不醒");
-		 break;
 	 case 18:
-		 pLabel->setString("好了，别说那么多，快救我出去");
-		 break;
 	 case 19:
-		 pLabel->setString("李：安心安心，钥匙我给你留了，在花盆里");
-		 break;
 	 case 20:
-		 pLabel->setString("哪个花盆啊？");
-		 break;
+		 {
+		  pLabel->setString(g_steps.at(m_TextProgress).strDialog);
+		  break;
+		 }	
 	 case 21:
 		 {
-		 pLabel->setString("擦叻！手机这时候没电，让你丫开会玩手机");
+		 pLabel->setString(g_steps.at(m_TextProgress).strDialog);
 		 CCNode* sc = this->getParent()->getChildByTag(249);
 		 static_cast<InputWidget*>(sc)->close();
 		 m_HasCalled =true;
 		 }
 	     break;
 	 case 22:
-		 pLabel->setString("好吧，我自己找，反正没几个花盆");
-		 break;
-	 case 23:
-		pLabel->setString(" ");
-		break;
+		 {
+		  pLabel->setString(g_steps.at(m_TextProgress).strDialog);
+	      pLabel->setString(g_steps.at(m_TextProgress).strDialog);	
+	 	  break;
+		 }
+		
 	 }
 }
 

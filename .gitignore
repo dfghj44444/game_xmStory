@@ -229,3 +229,9 @@ $RECYCLE.BIN/
 
 # Windows shortcuts
 *.lnk
+*.tlog
+proj.win32/Debug.win32/*
+Debug.win32/*
+#cocos
+cocos2d/*
+cocos2d 

@@ -138,6 +138,9 @@ xcopy /Y /Q "$(EngineRoot)external\websockets\prebuilt\win32\*.*" "$(OutDir)"</C
     <ClCompile Include="..\Classes\GameScene.cpp" />
     <ClCompile Include="..\Classes\HelloWorldScene.cpp" />
     <ClCompile Include="..\Classes\InputWidget.cpp" />
+    <ClCompile Include="..\Classes\sqllite\shell.c" />
+    <ClCompile Include="..\Classes\sqllite\sqlite3.c" />
+    <ClCompile Include="dataOperatorLite.cpp" />
     <ClCompile Include="main.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -146,6 +149,9 @@ xcopy /Y /Q "$(EngineRoot)external\websockets\prebuilt\win32\*.*" "$(OutDir)"</C
     <ClInclude Include="..\Classes\GameScene.h" />
     <ClInclude Include="..\Classes\HelloWorldScene.h" />
     <ClInclude Include="..\Classes\InputWidget.h" />
+    <ClInclude Include="..\Classes\sqllite\sqlite3.h" />
+    <ClInclude Include="..\Classes\sqllite\sqlite3ext.h" />
+    <ClInclude Include="dataOperatorLite.h" />
     <ClInclude Include="main.h" />
   </ItemGroup>
   <ItemGroup>
